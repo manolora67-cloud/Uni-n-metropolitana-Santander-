@@ -87,10 +87,11 @@ img{max-width:100%}
 .contacto{padding:2.5rem 1.25rem 2rem;border-top:1px solid var(--linea)}
 .contacto h2{margin:0 0 1rem;font:900 2.3rem/1 var(--titulos)}
 .contacto p{margin:0 0 1.2rem;color:var(--texto-suave);max-width:36ch}
-.fila{display:flex;align-items:center;gap:.7rem;margin:.35rem 0;font-size:1.05rem;overflow-wrap:anywhere}
-.fila svg{flex:none;width:22px;height:22px;fill:var(--dorado-texto)}
-.redes{display:flex;gap:.75rem;margin-top:1.4rem;flex-wrap:wrap}
-.redes a{padding:.7rem 1.2rem;border:1.5px solid var(--dorado-texto);color:var(--dorado-texto);border-radius:99px;text-decoration:none;font-weight:600}
+.iconos{display:flex;gap:.8rem;flex-wrap:wrap}
+.iconos a{display:grid;place-items:center;width:3.4rem;height:3.4rem;border:1.5px solid var(--dorado-texto);border-radius:50%;color:var(--dorado-texto);transition:background .2s,color .2s}
+.iconos a:hover,.iconos a:active{background:var(--dorado);border-color:var(--dorado);color:#1b1206}
+.iconos svg{width:26px;height:26px;fill:currentColor}
+.contacto .correo{margin:1.1rem 0 0;color:var(--texto-suave);font-size:.95rem;overflow-wrap:anywhere}
 footer{padding:1.2rem 1.25rem 2rem;color:var(--texto-suave);font-size:.9rem;border-top:1px solid var(--linea)}
 
 @media (max-width:400px){
