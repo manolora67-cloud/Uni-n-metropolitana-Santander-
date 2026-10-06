@@ -66,6 +66,51 @@ function crearTarjeta(d) {
 function mostrarDeportes(lista) {
   const contenedor = document.getElementById("lista-deportes");
   contenedor.replaceChildren(...lista.map(crearTarjeta));
+  armarControles(contenedor, lista.length);
+}
+
+// Puntos y flechas del carrusel
+function armarControles(contenedor, total) {
+  const puntos = document.getElementById("puntos");
+  const tarjetas = Array.from(contenedor.children);
+  const mover = (i) => contenedor.scrollTo({ left: tarjetas[i].offsetLeft - tarjetas[0].offsetLeft, behavior: "smooth" });
+
+  puntos.replaceChildren(...tarjetas.map((t, i) => {
+    const p = document.createElement("button");
+    p.type = "button";
+    p.className = "punto";
+    p.setAttribute("aria-label", "Ir a " + t.querySelector("h3").textContent);
+    p.addEventListener("click", () => mover(i));
+    return p;
+  }));
+
+  const indiceActual = () => {
+    const base = tarjetas[0].offsetLeft;
+    let mejor = 0, dist = Infinity;
+    tarjetas.forEach((t, i) => {
+      const d = Math.abs(t.offsetLeft - base - contenedor.scrollLeft);
+      if (d < dist) { dist = d; mejor = i; }
+    });
+    return mejor;
+  };
+
+  const marcar = () => {
+    const actual = indiceActual();
+    Array.from(puntos.children).forEach((p, i) => p.classList.toggle("activo", i === actual));
+  };
+
+  document.getElementById("anterior").onclick = () => mover(Math.max(indiceActual() - 1, 0));
+  document.getElementById("siguiente").onclick = () => mover(Math.min(indiceActual() + 1, total - 1));
+  contenedor.addEventListener("scroll", marcar, { passive: true });
+  marcar();
 }
 
 mostrarDeportes(deportes);
+
+// Botón de modo claro / oscuro
+document.getElementById("tema").addEventListener("click", () => {
+  const raiz = document.documentElement;
+  const nuevo = raiz.getAttribute("data-theme") === "light" ? "dark" : "light";
+  raiz.setAttribute("data-theme", nuevo);
+  try { localStorage.setItem("tema", nuevo); } catch (e) {}
+});
